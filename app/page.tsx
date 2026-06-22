@@ -1,3 +1,4 @@
+import AnimeSeasons from "@/components/AnimeSeasons";
 import Banner from "@/components/Banner";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -8,6 +9,7 @@ export default function Home() {
     <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
      <main className="w-full flex items-center justify-center flex-col">
         <Banner />
+        <AnimeSeasons />
      </main>
     </div>
   );

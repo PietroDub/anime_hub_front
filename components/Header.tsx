@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { FaGithub } from "react-icons/fa";
+import ThemeButton from "./ThemeButton";
 
 export default function Header() {
   return (
     // deslogado
-    <header className="w-full flex justify-center pt-4">
+    <header className="w-full justify-center pt-4 hidden md:flex">
       <div
         className="
       w-full
@@ -65,7 +66,7 @@ export default function Header() {
         </div>
 
         {/* Centro */}
-        <nav className="flex items-center gap-10">
+        <nav className="flex items-center gap-1 lg:gap-10">
           <Link
             href="/"
             className="
@@ -167,6 +168,8 @@ export default function Header() {
           >
             <FaGithub size={18} />
           </a>
+          
+          <ThemeButton />
         </div>
       </div>
     </header>
