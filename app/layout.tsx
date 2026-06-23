@@ -4,7 +4,6 @@ import "./globals.css";
 import MainContainer from "@/components/MainContainer";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
-
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -28,13 +27,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-screen flex flex-col text-gray-900 dark:text-gray-100">
+      <body
+        className="min-h-screen flex flex-col bg-white text-gray-900 transition-colors  duration-300 dark:bg-gray-950 dark:text-gray-100">
         <ThemeProvider>
-                  <MainContainer>
-                    {children}
-                  </MainContainer>
+          <MainContainer>{children}</MainContainer>
         </ThemeProvider>
       </body>
     </html>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Anime from "./Anime";
+import Title from "./Title";
 
 type AnimeSearchResponse = {
   data: Anime[];
@@ -23,9 +24,8 @@ type Images = {
 type Jpg = {
   image_url: string;
 };
-
-async function fetchAnimeSeasons(): Promise<AnimeSearchResponse> {
-  const response = await fetch("http://localhost:5212/api/Anime/season");
+async function fetchAnimeTop(): Promise<AnimeSearchResponse> {
+  const response = await fetch("http://localhost:5212/api/Anime/top");
 
   if (!response.ok) {
     throw new Error("Erro ao buscar os animes.");
@@ -34,20 +34,14 @@ async function fetchAnimeSeasons(): Promise<AnimeSearchResponse> {
   return await response.json();
 }
 
-export default function AnimeSeasons() {
-  const [animeSeasons, setAnimeSeasons] = useState<AnimeSearchResponse | null>(
-    null,
-  );
+export default function AnimeTop() {
+  const [animeTop, setAnimeTop] = useState<AnimeSearchResponse | null>(null);
 
-  //  Você está dizendo ao React:
-  // "Depois que esse componente aparecer na tela, execute esse código."
-  //  O [] significa:
-  // "Faça isso apenas uma vez."
   useEffect(() => {
     async function loadData() {
       try {
-        const data = await fetchAnimeSeasons();
-        setAnimeSeasons(data);
+        const data = await fetchAnimeTop();
+        setAnimeTop(data);
       } catch (error) {
         console.error(error);
       }
@@ -55,18 +49,17 @@ export default function AnimeSeasons() {
     loadData();
   }, []);
 
-  if (!animeSeasons) {
+  if (!animeTop) {
     return <p>Carregando...</p>;
   }
-
   return (
     <section>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-3xl font-bold mb-8">Animes da temporada</h1>
+        <Title title="Animes em alta:" />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* //limita a 16 animes por temporada, para não sobrecarregar a tela */}
-        {animeSeasons.data.slice(0, 16).map((anime) => (
+        {animeTop.data.slice(0, 8).map((anime) => (
           <Anime key={anime.malId} anime={anime} />
         ))}
       </div>
