@@ -1,6 +1,3 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import Anime from "./Anime";
 import Title from "./Title";
 
@@ -25,33 +22,18 @@ type Jpg = {
   image_url: string;
 };
 async function fetchAnimeTop(): Promise<AnimeSearchResponse> {
-  const response = await fetch("http://localhost:5212/api/Anime/top");
-
+  const response = await fetch("http://localhost:5212/api/Anime/top", {
+    cache: "no-store",
+  });
   if (!response.ok) {
     throw new Error("Erro ao buscar os animes.");
   }
-
-  return await response.json();
+  const data = await response.json();
+  return data;
 }
 
-export default function AnimeTop() {
-  const [animeTop, setAnimeTop] = useState<AnimeSearchResponse | null>(null);
-
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const data = await fetchAnimeTop();
-        setAnimeTop(data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    loadData();
-  }, []);
-
-  if (!animeTop) {
-    return <p>Carregando...</p>;
-  }
+export default async function AnimeTop() {
+  const response = await fetchAnimeTop();
   return (
     <section>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -59,7 +41,7 @@ export default function AnimeTop() {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* //limita a 16 animes por temporada, para não sobrecarregar a tela */}
-        {animeTop.data.slice(0, 8).map((anime) => (
+        {response.data.slice(0, 8).map((anime) => (
           <Anime key={anime.malId} anime={anime} />
         ))}
       </div>

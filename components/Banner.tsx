@@ -1,17 +1,49 @@
+"use client";
+
 import Image from "next/image";
 import Particles from "./ui/Particles";
+import { useEffect, useState } from "react";
 
 const cards = [
   {
-    title: "Solo Leveling",
+    title: "Kimetsu no Yaiba",
     description:
-      "Sung Jin-Woo era o caçador mais fraco de todos. Após um incidente misterioso, ele ganha a habilidade de evoluir infinitamente.",
-    image: "/Images/default_card_image.png",
+      "Após sua família ser massacrada por demônios, Tanjiro Kamado inicia uma jornada para salvar sua irmã Nezuko e se tornar um poderoso caçador de demônios.",
+    image: "/Images/Banner/kny.webp",
     color: "#6D28D9",
+  },
+  {
+    title: "Frieren",
+    description:
+      "Décadas após derrotar o Rei Demônio, a elfa Frieren embarca em uma nova jornada para compreender melhor os humanos e o valor das memórias.",
+    image: "/Images/Banner/frieren.png",
+    color: "#14B8A6",
+  },
+  {
+    title: "Dandadan",
+    description:
+      "Entre fantasmas, alienígenas e poderes sobrenaturais, Momo e Okarun vivem aventuras caóticas repletas de ação, humor e mistérios.",
+    image: "/Images/Banner/dandadan.png",
+    color: "#F97316",
+  },
+  {
+    title: "One Piece",
+    description:
+      "Monkey D. Luffy parte pelos mares em busca do lendário tesouro One Piece, reunindo aliados e enfrentando inimigos para se tornar o Rei dos Piratas.",
+    image: "/Images/Banner/onepiece.png",
+    color: "#2563EB",
   },
 ];
 
 export default function Banner() {
+  const [current, setCurrent] = useState(0);
+  useEffect(() => {
+  const interval = setInterval(() => {
+    setCurrent((prev) => (prev + 1) % cards.length);
+  }, 5000);
+
+  return () => clearInterval(interval);
+}, []);
   return (
     <section className="w-full flex justify-center px-6 py-8">
       <div
@@ -32,7 +64,7 @@ export default function Banner() {
         {/* Fundo */}
         <div className="absolute inset-0">
           <Particles
-            particleColors={[cards[0].color]}
+            particleColors={[cards[current].color]}
             particleCount={200}
             particleSpread={10}
             speed={0.1}
@@ -74,7 +106,7 @@ export default function Banner() {
                 leading-tight
               "
             >
-              {cards[0].title}
+              {cards[current].title}
             </h1>
 
             <p
@@ -84,7 +116,7 @@ export default function Banner() {
                 leading-relaxed
               "
             >
-              {cards[0].description}
+              {cards[current].description}
             </p>
 
             <div className="flex items-center gap-4">
@@ -139,13 +171,13 @@ export default function Banner() {
                 opacity-30
               "
               style={{
-                backgroundColor: cards[0].color,
+                backgroundColor: cards[current].color,
               }}
             />
 
             <Image
-              src={cards[0].image}
-              alt={cards[0].title}
+              src={cards[current].image}
+              alt={cards[current].title}
               width={450}
               height={600}
               className="
