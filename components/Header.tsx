@@ -102,6 +102,18 @@ export default function Header() {
           >
             About
           </Link>
+
+          <Link
+            href="/about"
+            className="
+          font-medium
+          text-gray-600
+          hover:text-blue-600
+          transition-all
+        "
+          >
+            ByYear
+          </Link>
         </nav>
 
         {/* Direita */}

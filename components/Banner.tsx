@@ -178,8 +178,8 @@ export default function Banner() {
             <Image
               src={cards[current].image}
               alt={cards[current].title}
-              width={450}
-              height={600}
+              width={650}
+              height={800}
               className="
                 relative
                 z-10

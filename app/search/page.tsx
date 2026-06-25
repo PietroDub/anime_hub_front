@@ -1,4 +1,6 @@
 import SearchBar from "@/components/SearchBar";
+import Anime from "../../components/Anime";
+import AnimeTop from "@/components/AnimeTop";
 
 type Props = {
   searchParams: Promise<{
@@ -6,8 +8,28 @@ type Props = {
     page?: string;
   }>;
 };
+type AnimeSearchResponse = {
+  data: Anime[];
+};
 
-async function fetchSearchAnime(nome: string) {
+type Anime = {
+  malId: number;
+  title: string;
+  type: string;
+  score: number;
+  synopsis: string;
+  images: Images;
+};
+
+type Images = {
+  jpg: Jpg;
+};
+
+type Jpg = {
+  image_url: string;
+};
+
+async function fetchSearchAnime(nome: string): Promise<AnimeSearchResponse> {
   const response = await fetch(
     `http://localhost:5212/api/Anime/titulo?title=${nome}`,
     {
@@ -24,11 +46,36 @@ async function fetchSearchAnime(nome: string) {
 }
 export default async function SearchPage({ searchParams }: Props) {
   const params = await searchParams;
+  const animes = await fetchSearchAnime(params.search || "naruto");
+  const encontrouResultados = animes.data.length;
 
   return (
-    <div>
-      <h1>OI</h1>
+    <section>
       <SearchBar />
-    </div>
+
+      {!params.search && (
+        <div>
+          <p>
+            Procure um anime para começar! ou Navegue pelos animes mais
+            populares!
+          </p>
+        </div>
+      )}
+      {params.search && encontrouResultados > 0 && (
+         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {animes.data.map((anime) => (
+          <Anime key={anime.malId} anime={anime} />
+        ))}
+      </div>
+      )}
+      {params.search && encontrouResultados <= 0 && (
+        <div>
+          <p>Anime {(await searchParams).search} não encontrado!</p>
+        </div>
+      )}
+      
+
+      <AnimeTop />
+    </section>
   );
 }
