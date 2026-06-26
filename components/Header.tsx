@@ -104,7 +104,7 @@ export default function Header() {
           </Link>
 
           <Link
-            href="/about"
+            href="/byYear"
             className="
           font-medium
           text-gray-600
