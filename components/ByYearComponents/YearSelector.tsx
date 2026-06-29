@@ -2,6 +2,7 @@
 
 import { useRouter, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 type SeasonArchive = {
   year: number;
@@ -49,23 +50,39 @@ export default function YearSelector({data}: Props) {
   }
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-      <button onClick={prev}>←</button>
+    <div className="flex items-center justify-center gap-3 py-5">
+  <button
+    onClick={prev}
+    disabled={startIndex === 0}
+    className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900 text-zinc-300 transition-all hover:bg-zinc-800 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+  >
+    <ChevronLeft size={18} />
+  </button>
 
-      {visibleYears.map((year) => (
-        <button
-          key={year}
-          onClick={() => {router.push(`/byYear?year=${year}`)}}
-          style={{
-            fontWeight: year === selectedYear ? "bold" : "normal",
-            textDecoration: year === selectedYear ? "underline" : "none",
-          }}
-        >
-          {year}
-        </button>
-      ))}
+  <div className="flex items-center gap-2 rounded-xl border border-zinc-800 bg-zinc-900/70 p-2 shadow-lg">
+    {visibleYears.map((year) => (
+      <button
+        key={year}
+        onClick={() => router.push(`/byYear?year=${year}`)}
+        className={`min-w-20 rounded-lg px-4 py-2 text-sm font-medium transition-all duration-200
+        ${
+          year === selectedYear
+            ? "bg-blue-600 text-white shadow-md"
+            : "text-zinc-300 hover:bg-zinc-800 hover:text-white"
+        }`}
+      >
+        {year}
+      </button>
+    ))}
+  </div>
 
-      <button onClick={next}>→</button>
-    </div>
+  <button
+    onClick={next}
+    disabled={startIndex + windowSize >= years.length}
+    className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900 text-zinc-300 transition-all hover:bg-zinc-800 hover:text-white disabled:cursor-not-allowed disabled:opacity-40"
+  >
+    <ChevronRight size={18} />
+  </button>
+</div>
   );
 }

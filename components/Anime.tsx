@@ -41,6 +41,9 @@ export default function Anime({ anime }: { anime: Anime }) {
 
       {/* Conteúdo */}
       <div className="relative z-10">
+        <div>
+          
+        </div>
         <div className="flex gap-2 mb-3">
           <span className="bg-white/90 px-3 py-1 rounded-full text-sm text-black font-bold">
             ⭐ {anime.score}
