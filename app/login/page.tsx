@@ -1,13 +1,16 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/contexts/AuthContext";
+
 
 export default function Login() {
   const router = useRouter();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useContext(AuthContext)!;
 
   async function fetchLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -26,11 +29,17 @@ export default function Login() {
       }
     );
 
+    const data = await response.json();
+
+    console.log(data)
+
     if (!response.ok) {
       alert("Email ou senha inválidos.");
       return;
     }
-
+    
+    login(data.user);
+    
     router.push("/");
   }
 

@@ -1,9 +1,15 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import { FaGithub } from "react-icons/fa";
 import ThemeButton from "./ThemeButton";
+import { useContext } from "react";
+import { AuthContext } from "@/contexts/AuthContext";
 
 export default function Header() {
+  const { user, logout } = useContext(AuthContext)!;
+
   return (
     // deslogado
     <header className="w-full justify-center pt-4 hidden md:flex">
@@ -114,13 +120,28 @@ export default function Header() {
           >
             ByYear
           </Link>
+
+          {user && (
+            <Link
+              href="/byYear"
+              className="
+          font-medium
+          text-gray-600
+          hover:text-blue-600
+          transition-all
+        "
+            >
+              My List
+            </Link>
+          )}
         </nav>
 
         {/* Direita */}
         <div className="flex items-center gap-3">
-          <Link
-            href="/login"
-            className="
+          {user ? (
+            <p
+              onClick={logout}
+              className="
           px-5
           py-2
           rounded-full
@@ -134,13 +155,34 @@ export default function Header() {
           transition-all
           duration-300
         "
-          >
-            Login
-          </Link>
+            >
+              Logout
+            </p>
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="
+          px-5
+          py-2
+          rounded-full
+          border
+          border-gray-200
+          bg-white
+          text-gray-700
+          hover:bg-blue-50
+          hover:text-blue-600
+          hover:border-blue-300
+          transition-all
+          duration-300
+        "
+              >
+                Login
+              </Link>
 
-          <Link
-            href="/register"
-            className="
+              <Link
+                href="/register"
+                className="
           px-5
           py-2
           rounded-full
@@ -152,9 +194,11 @@ export default function Header() {
           transition-all
           duration-300
         "
-          >
-            Register
-          </Link>
+              >
+                Register
+              </Link>
+            </>
+          )}
 
           <a
             href="https://github.com/seu-repositorio"
@@ -180,7 +224,7 @@ export default function Header() {
           >
             <FaGithub size={18} />
           </a>
-          
+
           <ThemeButton />
         </div>
       </div>
