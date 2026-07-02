@@ -1,13 +1,16 @@
 "use client";
 
+import { AuthContext } from "@/contexts/AuthContext";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { FaGithub } from "react-icons/fa6";
 
 export default function MobileHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { user, logout } = useContext(AuthContext)!;
+
   return (
     <header className="flex md:hidden px-4 py-3 ">
       <div
@@ -79,10 +82,9 @@ export default function MobileHeader() {
         </a>
 
         <button
-        onClick={() => {
-    setIsMenuOpen(!isMenuOpen);
-  }}
-        
+          onClick={() => {
+            setIsMenuOpen(!isMenuOpen);
+          }}
           className="w-10 h-10 rounded-xl border border-gray-200 bg-white text-gray-700 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 flex items-center justify-center
     hover:bg-gray-900
     hover:text-white
@@ -92,13 +94,14 @@ export default function MobileHeader() {
     dark:hover:text-black
     dark:hover:border-white
 
-    transition-all duration-300 " >
+    transition-all duration-300 "
+        >
           <Menu size={20} />
         </button>
       </div>
       <div className={isMenuOpen ? "block" : "hidden"}>
         <div
-  className={`
+          className={`
     absolute
     top-20
     left-4
@@ -124,11 +127,11 @@ export default function MobileHeader() {
 
     ${isMenuOpen ? "opacity-100 visible" : "opacity-0 invisible"}
   `}
->
-  <nav className="flex flex-col p-3">
-    <Link
-      href="/"
-      className="
+        >
+          <nav className="flex flex-col p-3">
+            <Link
+              href="/"
+              className="
         px-4
         py-3
         rounded-xl
@@ -144,13 +147,12 @@ export default function MobileHeader() {
 
         transition-all
       "
-    >
-      Home
-    </Link>
-
-    <Link
-      href="/search"
-      className="
+            >
+              Home
+            </Link>
+            <Link
+              href="/search"
+              className="
         px-4
         py-3
         rounded-xl
@@ -166,13 +168,12 @@ export default function MobileHeader() {
 
         transition-all
       "
-    >
-      Search
-    </Link>
-
-    <Link
-      href="/about"
-      className="
+            >
+              Search
+            </Link>
+            <Link
+              href="/about"
+              className="
         px-4
         py-3
         rounded-xl
@@ -188,15 +189,12 @@ export default function MobileHeader() {
 
         transition-all
       "
-    >
-      About
-    </Link>
-
-    <div className="my-2 h-px bg-gray-200 dark:bg-gray-700" />
-
-    <Link
-      href="/login"
-      className="
+            >
+              About
+            </Link>
+            <Link
+              href="/byYear"
+              className="
         px-4
         py-3
         rounded-xl
@@ -212,13 +210,75 @@ export default function MobileHeader() {
 
         transition-all
       "
-    >
-      Login
-    </Link>
+            >
+              By Year
+            </Link>
+            {user && (
+              <Link
+                href="/AnimeList"
+                className="
+          px-4
+        py-3
+        rounded-xl
 
-    <Link
-      href="/register"
-      className="
+        text-gray-700
+        dark:text-gray-200
+
+        hover:bg-blue-50
+        hover:text-blue-600
+
+        dark:hover:bg-gray-800
+        dark:hover:text-blue-400
+
+        transition-all
+        "
+              >
+                My List
+              </Link>
+            )}
+            <div className="my-2 h-px bg-gray-200 dark:bg-gray-700" />
+            {user ? (
+              <button
+                onClick={logout}
+                className="
+          px-4
+          py-3
+          rounded-xl
+          bg-red-500
+          text-white
+          hover:bg-red-600
+          transition-all
+        "
+              >
+                Logout
+              </button>
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="
+          px-4
+          py-3
+        rounded-xl
+
+        text-gray-700
+        dark:text-gray-200
+
+        hover:bg-blue-50
+        hover:text-blue-600
+
+        dark:hover:bg-gray-800
+        dark:hover:text-blue-400
+
+        transition-all
+      "
+                >
+                  Login
+                </Link>
+
+                <Link
+                  href="/register"
+                  className="
         mt-2
         px-4
         py-3
@@ -232,11 +292,14 @@ export default function MobileHeader() {
 
         transition-all
       "
-    >
-      Register
-    </Link>
-  </nav>
-</div>
+                >
+                  Register
+                </Link>
+              </>
+            )}
+            ;
+          </nav>
+        </div>
       </div>
     </header>
   );

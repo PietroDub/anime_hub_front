@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/contexts/AuthContext";
 
-
 export default function Login() {
   const router = useRouter();
 
@@ -15,31 +14,30 @@ export default function Login() {
   async function fetchLogin(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    const response = await fetch(
-      "http://localhost:5212/api/Auth/Login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-      }
-    );
+    const response = await fetch("http://localhost:5212/api/Auth/Login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email,
+        password,
+      }),
+    });
 
     const data = await response.json();
 
-    console.log(data)
+    localStorage.setItem("token", data.token);
 
+    login(data.user);
+    
     if (!response.ok) {
       alert("Email ou senha inválidos.");
       return;
     }
-    
+
     login(data.user);
-    
+
     router.push("/");
   }
 
@@ -59,9 +57,7 @@ export default function Login() {
 
         <div className="space-y-5">
           <div>
-            <label className="mb-2 block text-sm text-white">
-              Email
-            </label>
+            <label className="mb-2 block text-sm text-white">Email</label>
 
             <input
               type="email"
@@ -74,9 +70,7 @@ export default function Login() {
           </div>
 
           <div>
-            <label className="mb-2 block text-sm text-white">
-              Senha
-            </label>
+            <label className="mb-2 block text-sm text-white">Senha</label>
 
             <input
               type="password"

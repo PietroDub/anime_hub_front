@@ -32,7 +32,7 @@ export default function AuthProvider({ children } : AuthProviderProps) {
 
   //desloga alguém
   function logout() {
-    // localStorage.removeItem("token");
+    localStorage.removeItem("token");
     setUser(null);
   }
 

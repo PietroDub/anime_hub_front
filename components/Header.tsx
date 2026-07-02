@@ -123,7 +123,7 @@ export default function Header() {
 
           {user && (
             <Link
-              href="/byYear"
+              href="/AnimeList"
               className="
           font-medium
           text-gray-600
