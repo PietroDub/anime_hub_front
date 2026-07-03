@@ -1,8 +1,10 @@
 export type UserAnime = {
-    AnimeId: number;
-    Title: string;
-    ImageUrl: string;
-    Status: number;
-    EpisodesWatched: number;
-    Score: number;
+    ItemId : string;
+    animeId: number;
+    title: string;
+    imageUrl: string;
+    status: number;
+    episodesWatched: number;
+    score: number;
+    completedAt: string;
 }
