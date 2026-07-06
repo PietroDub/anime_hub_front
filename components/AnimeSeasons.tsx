@@ -8,7 +8,7 @@ type AnimeSearchResponse = {
 };
 
 type Anime = {
-  malId: number;
+  mal_id: number;
   title: string;
   type: string;
   score: number;
@@ -67,7 +67,7 @@ export default function AnimeSeasons() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* //limita a 16 animes por temporada, para não sobrecarregar a tela */}
         {animeSeasons.data.slice(0, 16).map((anime) => (
-          <Anime key={anime.malId} anime={anime} />
+          <Anime key={anime.mal_id} anime={anime} />
         ))}
       </div>
     </section>

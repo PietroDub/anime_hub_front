@@ -5,8 +5,8 @@ import Title from "@/components/Title";
 import UpdateModal from "@/components/UpdateModal";
 import { getMyAnimeList } from "@/Services/userAnimeList";
 import { UserAnime } from "@/types/UserAnime";
+import Link from "next/link";
 import { useEffect, useState } from "react";
-
 
 function statusName(status: number) {
   switch (status) {
@@ -27,7 +27,6 @@ function statusName(status: number) {
 
 export default function MyList() {
   const [animes, setAnimes] = useState<UserAnime[]>([]);
-  console.log("Animes:", animes);
   useEffect(() => {
     async function getList() {
       const data = await getMyAnimeList();
@@ -36,10 +35,17 @@ export default function MyList() {
 
     getList();
   }, []);
+  const [selectedAnime, setSelectedAnime] = useState<UserAnime | null>(null);
+  
+  const atualizarLista = () => {
+    async function getList() {
+      const data = await getMyAnimeList();
+      setAnimes(data);
+    }
+    getList();
+  }
 
-  console.log(animes);
-
-  const [openModal, setOpenModal] = useState(false);
+  console.log(selectedAnime);
 
   return (
     <div className="flex flex-col max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 gap-4">
@@ -81,27 +87,33 @@ export default function MyList() {
             </div>
 
             <div className="mt-5 flex justify-end gap-3">
-              <button 
-              onClick={() => setOpenModal(true)}
-              className="rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 transition hover:border-blue-600 hover:text-blue-400">
+              <button
+                onClick={() => {
+                  console.log(anime);
+                  setSelectedAnime(anime);
+                }}
+                className="rounded-lg border border-zinc-700 px-4 py-2 text-sm text-zinc-300 transition hover:border-blue-600 hover:text-blue-400"
+              >
                 Editar
               </button>
 
-              <UpdateModal
-                isOpen={openModal}
-                onClose={() => setOpenModal(false)}
-                ID={anime.ItemId}
-                animelist={anime}
-              />
-
-              <button className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
+              <Link 
+              href={`/anime/${anime.itemId}`}
+              className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
                 Ver Anime
-              </button>
+              </Link>
             </div>
           </div>
         </div>
       ))}
 
+      {selectedAnime && (
+        <UpdateModal
+          animelist={selectedAnime}
+          onUpdated={atualizarLista}
+          onClose={() => setSelectedAnime(null)}
+        />
+      )}
       {animes.length}
     </div>
   );
