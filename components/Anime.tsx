@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import AddAnimeModal from "./AdicionarAnime";
+import Link from "next/dist/client/link";
 
 type Anime = {
   mal_id: number;
@@ -57,6 +58,11 @@ export default function Anime({ anime }: { anime: Anime }) {
           onClose={() => setOpenModal(false)}
           AnimeId={anime.mal_id}
         />
+
+        <Link
+        href={`/anime/${anime.mal_id}`}
+        className="bg-blue-600 text-white px-4 py-2 rounded-lg mb-3 hover:bg-blue-700 transition">
+        Ver anime</Link>
 
         <div className="flex gap-2 mb-3">
           <span className="bg-white/90 px-3 py-1 rounded-full text-sm text-black font-bold">

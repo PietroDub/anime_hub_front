@@ -98,7 +98,7 @@ export default function MyList() {
               </button>
 
               <Link 
-              href={`/anime/${anime.itemId}`}
+              href={`/myList/${anime.itemId}`}
               className="rounded-lg bg-blue-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-blue-700">
                 Ver Anime
               </Link>

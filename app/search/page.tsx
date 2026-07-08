@@ -13,7 +13,7 @@ type AnimeSearchResponse = {
 };
 
 type Anime = {
-  malId: number;
+  mal_id: number;
   title: string;
   type: string;
   score: number;
@@ -54,7 +54,7 @@ export default async function SearchPage({ searchParams }: Props) {
       <SearchBar />
 
       {!params.search && (
-        <div>
+        <div className="gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <p>
             Procure um anime para começar! ou Navegue pelos animes mais
             populares!
@@ -64,7 +64,7 @@ export default async function SearchPage({ searchParams }: Props) {
       {params.search && encontrouResultados > 0 && (
          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {animes.data.map((anime) => (
-          <Anime key={anime.malId} anime={anime} />
+          <Anime key={anime.mal_id} anime={anime} />
         ))}
       </div>
       )}

@@ -19,7 +19,7 @@ p-5
 {title}
 </p>
 
-<h3 className="mt-2 text-xl font-semibold">
+<h3 className="mt-2 text-xl font-semibold text-zinc-500">
 {value}
 </h3>
 
