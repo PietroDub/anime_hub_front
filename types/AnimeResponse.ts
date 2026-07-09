@@ -2,8 +2,6 @@ type AnimeResponse = {
     animeId: number;
 
     title: string;
-    titleEnglish?: string;
-    titleJapanese?: string;
 
     imageUrl: string;
 
@@ -26,6 +24,4 @@ type AnimeResponse = {
     themes: string[];
     studios: string[];
 
-    favorites: number;
-    members: number;
 }

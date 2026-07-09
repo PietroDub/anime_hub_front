@@ -39,6 +39,7 @@ export default function AnimeListItem({ id }: { id: string }) {
   useEffect(() => {
     carregarAnime();
   }, [id]);
+  
   if (!anime) {
     return <p>Carregando...</p>;
   }
