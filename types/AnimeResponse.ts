@@ -1,27 +1,38 @@
-type AnimeResponse = {
-    animeId: number;
+type NamedItem = {
+  mal_id: number;
+  name: string;
+};
 
-    title: string;
+type Trailer = {
+  youtube_id?: string;
+  url?: string;
+  embed_url?: string;
+};
 
-    imageUrl: string;
+type ImageJpg = {
+  image_url: string;
+};
 
-    synopsis: string;
-    background?: string;
+type Images = {
+  jpg: ImageJpg;
+};
 
-    type: string;
-    source: string;
-    episodes?: number;
-
-    animeStatus: string;
-    rating: string;
-
-    season?: string;
-    year?: number;
-
-    trailerUrl?: string;
-
-    genres: string[];
-    themes: string[];
-    studios: string[];
-
-}
+type AnimeData = {
+  mal_id: number;
+  title: string;
+  type: string;
+  source: string;
+  episodes?: number;
+  status: string;
+  rating: string;
+  score?: number;
+  season?: string;
+  year?: number;
+  synopsis: string;
+  background?: string;
+  trailer?: Trailer;
+  studios?: NamedItem[];
+  genres?: NamedItem[];
+  themes?: NamedItem[];
+  images: Images;
+};

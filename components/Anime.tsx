@@ -3,6 +3,13 @@
 import { useState } from "react";
 import AddAnimeModal from "./AdicionarAnime";
 import Link from "next/dist/client/link";
+import { Plus, PlusCircleIcon } from "lucide-react";
+
+type Props = {
+  anime: Anime;
+  onAdd: (anime: Anime) => void;
+};
+
 
 type Anime = {
   mal_id: number;
@@ -21,8 +28,7 @@ type Jpg = {
   image_url: string;
 };
 
-export default function Anime({ anime }: { anime: Anime }) {
-  const [openModal, setOpenModal] = useState(false);
+export default function Anime({ anime, onAdd }: Props) {
   return (
     <div
       key={anime.mal_id}
@@ -48,21 +54,21 @@ export default function Anime({ anime }: { anime: Anime }) {
 
       {/* Conteúdo */}
       <div className="relative z-10">
-        <button 
-        onClick={() => setOpenModal(true)}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg mb-3 hover:bg-blue-700 transition">
-        Adicionar à Lista</button>
+        <div className="flex justify-left gap-2 items-center mb-3">
+          <button
+            onClick={() => onAdd(anime)}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg mb-3 hover:bg-blue-700 transition"
+          >
+            <PlusCircleIcon className="inline-block m-1" />
+          </button>
 
-        <AddAnimeModal
-          isOpen={openModal}
-          onClose={() => setOpenModal(false)}
-          AnimeId={anime.mal_id}
-        />
-
-        <Link
-        href={`/anime/${anime.mal_id}`}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg mb-3 hover:bg-blue-700 transition">
-        Ver anime</Link>
+          <Link
+            href={`/anime/${anime.mal_id}`}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg mb-3 hover:bg-blue-700 transition"
+          >
+            Ver anime
+          </Link>
+        </div>
 
         <div className="flex gap-2 mb-3">
           <span className="bg-white/90 px-3 py-1 rounded-full text-sm text-black font-bold">

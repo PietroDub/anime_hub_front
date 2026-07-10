@@ -1,9 +1,6 @@
 import AnimeSeasons from "@/components/AnimeSeasons";
 import AnimeTop from "@/components/AnimeTop";
 import Banner from "@/components/Banner";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import Image from "next/image";
 
 export default function Home() {
   return (

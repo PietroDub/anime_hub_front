@@ -10,7 +10,7 @@ export default async function AnimePage({ params }: Props) {
     console.log("AnimePage params:", await params);
     return(
         <div>
-            <AnimeDetails id={await GetAnimeId((await params).id)} />
+            <AnimeDetails id={Number((await params).id)} />
         </div>
     );
 }

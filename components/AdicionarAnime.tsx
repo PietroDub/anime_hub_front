@@ -1,34 +1,29 @@
 "use client";
 
 import { AnimeStatus } from "@/types/AnimeStatus";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { X } from "lucide-react";
+import { toast } from "sonner";
 
 type Props = {
-  isOpen: boolean;
   onClose: () => void;
   AnimeId: number;
 };
 
-export default function AddAnimeModal({ isOpen, onClose, AnimeId }: Props) {
-  if (!isOpen) return null;
-
+export default function AddAnimeModal({ onClose, AnimeId }: Props) {
   const [Status, setStatus] = useState<AnimeStatus>(AnimeStatus.Watching);
   const [EpisodesWatched, setEpisodes] = useState<number>(0);
   const [Score, setScore] = useState<number>(0);
-  const token = localStorage.getItem("token");
+
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    setToken(localStorage.getItem("token") ?? "");
+}, []);
 
   async function fetchAddAnime(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-
-    const body = {
-      AnimeId,
-      Status,
-      EpisodesWatched,
-      Score,
-    };
-
-    console.log(body);
 
     const response = await fetch("http://localhost:5212/api/UserAnimeList", {
       method: "POST",
@@ -46,15 +41,11 @@ export default function AddAnimeModal({ isOpen, onClose, AnimeId }: Props) {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
-
+      toast.success("Anime adicionado com sucesso!"); 
       onClose();
-      alert("Anime adicionado com sucesso!");
     } else {
       const error = await response.text();
-
-      console.log(error);
-      alert(error);
+      toast.error(error);
     }
   }
 
@@ -67,7 +58,9 @@ export default function AddAnimeModal({ isOpen, onClose, AnimeId }: Props) {
 
           <button
             type="button"
-            onClick={onClose}
+            onClick={() => {
+                console.log("Fechando modal");
+                onClose()}}
             className="rounded-full p-2 text-zinc-500 transition hover:bg-zinc-100 hover:text-red-500"
           >
             <X size={22} />
@@ -127,9 +120,12 @@ export default function AddAnimeModal({ isOpen, onClose, AnimeId }: Props) {
           <div className="flex justify-end gap-3 pt-4">
             <button
               type="button"
-              onClick={onClose}
+              onClick={() => {
+                console.log("Fechando modal");
+                onClose()}}
               className="rounded-lg border border-zinc-300 px-5 py-2.5 font-medium text-zinc-700 transition hover:bg-zinc-100"
             >
+              
               Cancelar
             </button>
 

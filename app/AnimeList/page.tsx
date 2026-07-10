@@ -114,7 +114,6 @@ export default function MyList() {
           onClose={() => setSelectedAnime(null)}
         />
       )}
-      {animes.length}
     </div>
   );
 }
